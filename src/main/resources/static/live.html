@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+          <title>live</title>
+    </head>
+      <body>
+          <video id="videoElement" muted autoplay controls>
+                Your browser is too old which doesn't support HTML5 video.
+          </video>
+          <script src="flv.js"></script>
+          <script>
+            console.log('isSupported: ' + flvjs.isSupported());
+            var mediaDataSource = {type: 'flv'};
+            mediaDataSource['url'] = "http://192.168.56.101/live?app=mylive&stream=1";
+            mediaDataSource['isLive'] = true;
+            mediaDataSource['hasVideo'] = true;
+            mediaDataSource['hasAudio'] = true;
+            
+            var videoElement = document.getElementById('videoElement');
+            if (typeof player !== "undefined") {
+                if (player != null) {
+                    player.unload();
+                    player.detachMediaElement();
+                    player.destroy();
+                    player = null;
+                }
+            }
+            player = flvjs.createPlayer(mediaDataSource, {
+                enableWorker: false,
+                lazyLoadMaxDuration: 3 * 60,
+                seekType: 'range',
+            });
+            player.attachMediaElement(videoElement);
+            player.load();
+             
+         </script>
+     </body>
+</html>
